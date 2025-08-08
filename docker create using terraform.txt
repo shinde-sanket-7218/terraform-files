@@ -1,0 +1,28 @@
+terraform {
+ required_providers {
+  docker = {
+   source = "kreuzwerker/docker"
+   version = "3.0.2"
+  }
+ }
+}
+
+provider "docker" {
+ host = "unix:///var/run/docker.sock"
+}
+
+resource "docker_image" "myimg" {
+ name = "nginx"
+}
+
+resource "docker_container" "mycon" {
+ image = docker_image.myimg.name
+ name = "mynginxcon"
+}
+
+resource "null_resource" "execfile" {
+ provisioner "local-exec" {
+ command = "${path.module}/docker.sh"
+ interpreter = ["/bin/bash"]
+ }
+}
