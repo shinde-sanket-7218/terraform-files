@@ -1,0 +1,8 @@
+***terraform resource lifecycle***
+
+lifecycle {
+1. create_before_destroy ----->first create and then destroy
+2. prevent_destroy ---------> IMP resource expext all resource destroy
+3. ignore_changes 
+4. replace_triggered_by = [aws.security_group.main]---->first destroy and then create
+}
